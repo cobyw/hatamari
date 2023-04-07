@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 5452275390323752545}
   m_Layer: 0
   m_Name: urchin
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,7 +50,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.07, y: -0.19}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.65
 --- !u!50 &5452275390323752546
@@ -88,6 +88,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6.47
   angularSpeed: 33.3
+  jumpHeight: 1
+  gravityValue: -9.81
+  timeBetweenJumps: 3
 --- !u!114 &5452275390323752573
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,8 +16,6 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 1.0f;
     public float gravityValue = -9.81f;
     public float timeBetweenJumps = 3.0f;
-    private float timeSinceLastJump = 0.0f;
-    private bool canJump = true;
 
     bool canMoveLeft = false;
     bool canMoveRight = false;

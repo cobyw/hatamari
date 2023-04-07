@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class Urchin : MonoBehaviour
 {
-    private List<Hat> hats = new List<Hat>();
+    public List<Hat> urchinHats = new List<Hat>();
     [SerializeField] private GameObject offsetPoint;
-
-    private Hat topHat;
 
     private Vector3 offsetDistance;
 
@@ -21,21 +19,33 @@ public class Urchin : MonoBehaviour
         offsetPoint.transform.position = transform.position + offsetDistance;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Hat>())
+        {
+            Attach(collision.GetComponent<Hat>());
+        }
+    }
+
     public void Attach(Hat hatToAttach)
     {
-        hats.Add(hatToAttach);
-
-        if (hats.Count == 1)
+        if (!hatToAttach.isAttached)
         {
-            hatToAttach.gameObject.transform.parent = offsetPoint.transform;
-            hatToAttach.gameObject.transform.localPosition = Vector3.zero;
-        }
-        else
-        {
-            hatToAttach.gameObject.transform.parent = topHat.nextHatAttachPoint.transform;
-            hatToAttach.gameObject.transform.localPosition = Vector3.zero;
-        }
+            if (urchinHats.Count == 0)
+            {
+                hatToAttach.gameObject.transform.parent = offsetPoint.transform;
+                hatToAttach.gameObject.transform.localPosition = Vector3.zero;
+            }
+            else
+            {
+                hatToAttach.gameObject.transform.parent = urchinHats[urchinHats.Count - 1].nextHatAttachPoint.transform;
+                hatToAttach.gameObject.transform.localPosition = Vector3.zero;
+            }
+            urchinHats.Add(hatToAttach);
 
-        topHat = hatToAttach;
+            hatToAttach.spriteRenderer.sortingOrder = urchinHats.Count;
+
+            hatToAttach.isAttached = true;
+        }
     }
 }
