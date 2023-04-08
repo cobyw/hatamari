@@ -62,6 +62,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SquishMovement"",
+                    ""type"": ""Button"",
+                    ""id"": ""61ce6680-0fe6-4ae0-9673-7ffc4120ad58"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -174,6 +183,61 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""JumpMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""14e84be5-c76c-42d2-bdde-19e0ea764db7"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JumpMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba5dc544-1cae-4ab1-ad14-b1b25a07130b"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JumpMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d0da454-e5de-46ad-baf0-cb65029f4a75"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SquishMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b48cc48e-a0b6-441b-b027-eab6ab55857a"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SquishMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8c1f58dc-5691-44ee-824c-85de41fc2632"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SquishMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -186,6 +250,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_RightMovement = m_Gameplay.FindAction("RightMovement", throwIfNotFound: true);
         m_Gameplay_Select = m_Gameplay.FindAction("Select", throwIfNotFound: true);
         m_Gameplay_JumpMovement = m_Gameplay.FindAction("JumpMovement", throwIfNotFound: true);
+        m_Gameplay_SquishMovement = m_Gameplay.FindAction("SquishMovement", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -251,6 +316,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_RightMovement;
     private readonly InputAction m_Gameplay_Select;
     private readonly InputAction m_Gameplay_JumpMovement;
+    private readonly InputAction m_Gameplay_SquishMovement;
     public struct GameplayActions
     {
         private @PlayerControls m_Wrapper;
@@ -259,6 +325,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @RightMovement => m_Wrapper.m_Gameplay_RightMovement;
         public InputAction @Select => m_Wrapper.m_Gameplay_Select;
         public InputAction @JumpMovement => m_Wrapper.m_Gameplay_JumpMovement;
+        public InputAction @SquishMovement => m_Wrapper.m_Gameplay_SquishMovement;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -280,6 +347,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @JumpMovement.started += instance.OnJumpMovement;
             @JumpMovement.performed += instance.OnJumpMovement;
             @JumpMovement.canceled += instance.OnJumpMovement;
+            @SquishMovement.started += instance.OnSquishMovement;
+            @SquishMovement.performed += instance.OnSquishMovement;
+            @SquishMovement.canceled += instance.OnSquishMovement;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -296,6 +366,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @JumpMovement.started -= instance.OnJumpMovement;
             @JumpMovement.performed -= instance.OnJumpMovement;
             @JumpMovement.canceled -= instance.OnJumpMovement;
+            @SquishMovement.started -= instance.OnSquishMovement;
+            @SquishMovement.performed -= instance.OnSquishMovement;
+            @SquishMovement.canceled -= instance.OnSquishMovement;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -319,5 +392,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnRightMovement(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
         void OnJumpMovement(InputAction.CallbackContext context);
+        void OnSquishMovement(InputAction.CallbackContext context);
     }
 }

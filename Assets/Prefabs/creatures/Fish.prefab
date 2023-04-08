@@ -163,8 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db6f9fb4b06dcb4c8b4308465a88302, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hats: []
-  speed: -1
+  creatureHats: []
+  speed: 0
   attachPoint: {fileID: 7557345476564569646}
   winCreature: 0
 --- !u!58 &4218938640153944437
@@ -180,7 +180,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.22, y: 0.1}
+  m_Offset: {x: -0.22, y: 0.9}
   serializedVersion: 2
   m_Radius: 0.2
 --- !u!1 &7557345476564569646
@@ -207,7 +207,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7557345476564569646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.28, y: 0.225, z: 0}
+  m_LocalPosition: {x: -0.28, y: 0.997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

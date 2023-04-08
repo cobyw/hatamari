@@ -17,9 +17,12 @@ public class PlayerMovement : MonoBehaviour
     public float gravityValue = -9.81f;
     public float timeBetweenJumps = 3.0f;
 
+    public Squisher squisher;
+
     bool canMoveLeft = false;
     bool canMoveRight = false;
     bool tryJump = false;
+    bool trySquish = false;
 
     bool collidedWithGround = false;
 
@@ -28,8 +31,6 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         controls = new PlayerControls();
-        //controls.Gameplay.LeftMovement.performed += ctx => MoveLeft();
-        //controls.Gameplay.RightMovement.performed += ctx => MoveRight();
     }
 
     // Start is called before the first frame update
@@ -59,22 +60,15 @@ public class PlayerMovement : MonoBehaviour
         {
             MoveRight();
         }
-        
+
         if (tryJump && collidedWithGround)
         {
             Jump();
         }
-        /*
-        if (!canJump)
+        else if (trySquish && collidedWithGround)
         {
-            timeSinceLastJump += Time.deltaTime;
-            if (timeSinceLastJump > timeBetweenJumps)
-            {
-                canJump = true;
-                timeSinceLastJump = 0;
-            }
+            Squish();
         }
-        */
     }
 
     void OnLeftMovement(InputValue value)
@@ -90,6 +84,11 @@ public class PlayerMovement : MonoBehaviour
     void OnJumpMovement(InputValue value)
     {
         tryJump = value.isPressed;
+    }
+
+    void OnSquishMovement(InputValue value)
+    {
+        trySquish = value.isPressed;
     }
 
     void MoveLeft()
@@ -109,9 +108,15 @@ public class PlayerMovement : MonoBehaviour
 
     void Jump()
     {
-
+        collidedWithGround = false;
         rb.velocity = new Vector2(rb.velocity.x, Mathf.Sqrt(jumpHeight * -3.0f * gravityValue));
         tryJump = false;
+    }
+
+    void Squish()
+    {
+        squisher.squishing = true;
+        trySquish = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
