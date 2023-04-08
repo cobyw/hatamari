@@ -60,12 +60,6 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    //this is called after start
-    private void OnDisable()
-    {
-        StopSpawning(immediate: true);
-    }
-
 #if UNITY_EDITOR
     private void OnValidate()
     {

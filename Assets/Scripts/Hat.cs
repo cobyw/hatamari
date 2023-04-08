@@ -16,4 +16,9 @@ public class Hat : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+
+    private void Update()
+    {
+        transform.localScale = Vector3.one;
+    }
 }

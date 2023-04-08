@@ -24,6 +24,8 @@ public class PlayerMovement : MonoBehaviour
     bool tryJump = false;
     bool trySquish = false;
 
+    public bool canInteract = true;
+
     bool collidedWithGround = false;
 
     PlayerControls controls;
@@ -52,22 +54,25 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (canMoveLeft)
+        if (canInteract)
         {
-            MoveLeft();
-        }
-        else if (canMoveRight)
-        {
-            MoveRight();
-        }
+            if (canMoveLeft)
+            {
+                MoveLeft();
+            }
+            else if (canMoveRight)
+            {
+                MoveRight();
+            }
 
-        if (tryJump && collidedWithGround)
-        {
-            Jump();
-        }
-        else if (trySquish && collidedWithGround)
-        {
-            Squish();
+            if (tryJump && collidedWithGround)
+            {
+                Jump();
+            }
+            else if (trySquish && collidedWithGround)
+            {
+                Squish();
+            }
         }
     }
 

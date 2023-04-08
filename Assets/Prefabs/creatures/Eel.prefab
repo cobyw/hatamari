@@ -126,6 +126,12 @@ MonoBehaviour:
   speed: 0
   attachPoint: {fileID: 2005431491105755260}
   winCreature: 0
+  winTimeScale: 0.25
+  timeToLoadWinScreen: 4
+  timeToLoadLoseScreen: 0.5
+  winScreenName: winScreen
+  loseTimeScale: 0.5
+  loseScreenName: loseScreen
 --- !u!114 &6012939233898994199
 MonoBehaviour:
   m_ObjectHideFlags: 0

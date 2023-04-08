@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Creature : MonoBehaviour
 {
@@ -8,7 +9,16 @@ public class Creature : MonoBehaviour
     public float speed = 1;
     public GameObject attachPoint;
 
-    public bool winCreature = false;
+    [SerializeField] private bool winCreature = false;
+    [SerializeField] private float winTimeScale = 0.25f;
+
+    [SerializeField] private float timeToLoadWinScreen;
+    [SerializeField] private float timeToLoadLoseScreen;
+
+    [SerializeField] private string winScreenName = "winScreen";
+
+    [SerializeField] private float loseTimeScale = 0.5f;
+    [SerializeField] private string loseScreenName = "loseScreen";
 
     private Vector3 movementVector;
 
@@ -25,6 +35,9 @@ public class Creature : MonoBehaviour
             attachPoint = gameObject;
             Debug.LogWarning("No attachPoint set on " + gameObject);
         }
+
+        timeToLoadWinScreen *= winTimeScale;
+        timeToLoadLoseScreen *= loseTimeScale;
     }
 
     // Update is called once per frame
@@ -46,7 +59,7 @@ public class Creature : MonoBehaviour
                 Attack(collision.gameObject);
             }
         }
-        else if (collision.GetComponent<Hat>() != null)
+        else if (!winCreature && collision.GetComponent<Hat>() != null)
         {
             Attach(collision.GetComponent<Hat>());
         }
@@ -65,15 +78,6 @@ public class Creature : MonoBehaviour
         }
     }
 
-    private void Win()
-    {
-        Debug.Log("YOU WIN");
-    }
-
-    private void Lose()
-    {
-        Debug.Log("YOU LOSE");
-    }
 
     public void Attach(Hat hatToAttach)
     {
@@ -116,4 +120,65 @@ public class Creature : MonoBehaviour
 
         hatToAttach.isAttached = true;
     }
+
+    private void Win()
+    {
+        //slows down time to indicate winning
+        Time.timeScale = winTimeScale;
+
+        //puts the urchin on the crab as a hat and freezes them
+        urchin.transform.parent = attachPoint.transform;
+        urchin.transform.localPosition = Vector3.zero;
+        urchin.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+        urchin.gameObject.GetComponent<Rigidbody2D>().freezeRotation = true;
+
+        //gross but whatever - makes it so creatures won't steal hats
+        foreach (CircleCollider2D circleCollider in FindObjectsOfType<CircleCollider2D>())
+        {
+            circleCollider.enabled = false;
+        }
+
+        //also gross but whatever - makes it so things stop spawning
+        foreach (Spawner spawner in FindObjectsOfType<Spawner>())
+        {
+            spawner.StopSpawningOverTime();
+        }
+
+        StartCoroutine(LoadWinScreen());
+    }
+
+    IEnumerator LoadWinScreen()
+    {
+        yield return new WaitForSeconds(timeToLoadWinScreen);
+        Time.timeScale = 1;
+        SceneManager.LoadScene(winScreenName);
+    }
+
+    private void Lose()
+    {
+        //slows down time to indicate losing
+        Time.timeScale = loseTimeScale;
+
+        urchin.gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezePosition;
+        urchin.gameObject.GetComponent<Rigidbody2D>().freezeRotation = true;
+
+        StartCoroutine(LoseOverTime());
+    }
+
+    IEnumerator LoseOverTime()
+    {
+        var timeLosing = 0f;
+        var scale = 1f;
+        while (timeLosing < timeToLoadLoseScreen)
+        {
+            timeLosing += Time.deltaTime;
+            scale = Mathf.Lerp(1, 0, timeLosing / timeToLoadLoseScreen);
+            urchin.gameObject.transform.localScale = new Vector3(scale, scale, scale);
+            yield return null;
+        }
+
+        Time.timeScale = 1;
+        SceneManager.LoadScene(loseScreenName);
+    }
+
 }

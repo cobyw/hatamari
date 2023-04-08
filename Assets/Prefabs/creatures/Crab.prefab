@@ -126,6 +126,12 @@ MonoBehaviour:
   speed: 0
   attachPoint: {fileID: 6452353969345199591}
   winCreature: 0
+  winTimeScale: 0.25
+  timeToLoadWinScreen: 4
+  timeToLoadLoseScreen: 0.5
+  winScreenName: winScreen
+  loseTimeScale: 0.5
+  loseScreenName: loseScreen
 --- !u!58 &6452353968287816664
 CircleCollider2D:
   m_ObjectHideFlags: 0

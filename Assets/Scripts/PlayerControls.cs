@@ -240,6 +240,56 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""c41526a6-0d4e-4220-81c9-5e71f917ae52"",
+            ""actions"": [
+                {
+                    ""name"": ""AnyButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""07715e66-2689-405c-9c1f-8b718da64940"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""7ef056af-89c3-4b3d-8a53-1374d6500927"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c92a5ae1-db8d-47aa-8a2d-db72f0b3e1d4"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""180a3d32-593f-4b6e-91d8-fd8cdb3fcfdf"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnyButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -251,6 +301,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Select = m_Gameplay.FindAction("Select", throwIfNotFound: true);
         m_Gameplay_JumpMovement = m_Gameplay.FindAction("JumpMovement", throwIfNotFound: true);
         m_Gameplay_SquishMovement = m_Gameplay.FindAction("SquishMovement", throwIfNotFound: true);
+        // Menu
+        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        m_Menu_AnyButton = m_Menu.FindAction("AnyButton", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -386,6 +439,52 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // Menu
+    private readonly InputActionMap m_Menu;
+    private List<IMenuActions> m_MenuActionsCallbackInterfaces = new List<IMenuActions>();
+    private readonly InputAction m_Menu_AnyButton;
+    public struct MenuActions
+    {
+        private @PlayerControls m_Wrapper;
+        public MenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @AnyButton => m_Wrapper.m_Menu_AnyButton;
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void AddCallbacks(IMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Add(instance);
+            @AnyButton.started += instance.OnAnyButton;
+            @AnyButton.performed += instance.OnAnyButton;
+            @AnyButton.canceled += instance.OnAnyButton;
+        }
+
+        private void UnregisterCallbacks(IMenuActions instance)
+        {
+            @AnyButton.started -= instance.OnAnyButton;
+            @AnyButton.performed -= instance.OnAnyButton;
+            @AnyButton.canceled -= instance.OnAnyButton;
+        }
+
+        public void RemoveCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MenuActions @Menu => new MenuActions(this);
     public interface IGameplayActions
     {
         void OnLeftMovement(InputAction.CallbackContext context);
@@ -393,5 +492,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSelect(InputAction.CallbackContext context);
         void OnJumpMovement(InputAction.CallbackContext context);
         void OnSquishMovement(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnAnyButton(InputAction.CallbackContext context);
     }
 }
