@@ -26,6 +26,7 @@ public class Creature : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = false;
         urchin = FindObjectOfType<Urchin>();
 
         movementVector = new Vector3(speed, 0, 0);
@@ -154,6 +155,7 @@ public class Creature : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToLoadWinScreen);
         Time.timeScale = 1;
+        Cursor.visible = true;
         SceneManager.LoadScene(winScreenName);
     }
 
@@ -181,6 +183,7 @@ public class Creature : MonoBehaviour
         }
 
         Time.timeScale = 1;
+        Cursor.visible = true;
         SceneManager.LoadScene(loseScreenName);
     }
 

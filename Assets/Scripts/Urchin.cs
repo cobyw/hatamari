@@ -7,7 +7,7 @@ public class Urchin : MonoBehaviour
     public List<Hat> urchinHats = new List<Hat>();
     [SerializeField] private GameObject offsetPoint;
     [SerializeField] private ScoreStructScriptable scoreStructScriptable;
-    [SerializeField] private HighScoreManager highScoreManager;
+    [SerializeField] private ScoreManager highScoreManager;
 
     private Vector3 offsetDistance;
 
@@ -17,7 +17,7 @@ public class Urchin : MonoBehaviour
 
         if (highScoreManager == null)
         {
-            highScoreManager = FindObjectOfType<HighScoreManager>();
+            highScoreManager = FindObjectOfType<ScoreManager>();
         }
         //clears the current score
         scoreStructScriptable.Clear();
@@ -75,6 +75,5 @@ public class Urchin : MonoBehaviour
     public void UpdateEndScore()
     {
         scoreStructScriptable.score.endingHats = urchinHats.Count;
-        highScoreManager.Save();
     }
 }

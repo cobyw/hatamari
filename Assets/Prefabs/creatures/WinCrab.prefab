@@ -129,7 +129,7 @@ MonoBehaviour:
   winTimeScale: 0.25
   timeToLoadWinScreen: 4
   timeToLoadLoseScreen: 0.5
-  winScreenName: winScreen
+  winScreenName: newScoreScreen
   loseTimeScale: 0.5
   loseScreenName: loseScreen
 --- !u!58 &6082482081745921450

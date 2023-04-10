@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: High Score Object
   m_EditorClassIdentifier: Assembly-CSharp::HighScoreStructScriptable
   score:
-    totalHats: 0
-    endingHats: 0
-    maxHats: 0
+    totalHats: 10
+    endingHats: 4
+    maxHats: 4
     initials: 

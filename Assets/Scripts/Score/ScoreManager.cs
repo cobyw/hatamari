@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class HighScoreManager : MonoBehaviour
+public class ScoreManager : MonoBehaviour
 {
     [SerializeField] private ScoreStructScriptable scoreScriptable;
     [SerializeField] int scoresToShow = 5;
@@ -12,9 +12,9 @@ public class HighScoreManager : MonoBehaviour
     private List<ScoreStruct> scoreList;
     private ScoreStruct [] scoreArray;
 
-    private ScoreStruct[] totalHatArray;
-    private ScoreStruct[] endHatArray;
-    private ScoreStruct[] maxHatArray;
+    private ScoreStruct[] totalHatArray = new ScoreStruct[5];
+    private ScoreStruct[] endHatArray = new ScoreStruct[5];
+    private ScoreStruct[] maxHatArray = new ScoreStruct[5];
 
     private string yourScoreString;
     private string highScoreString;
@@ -108,5 +108,120 @@ public class HighScoreManager : MonoBehaviour
             scoreList.Reverse();
             endHatArray = scoreList.GetRange(0, scoresToShow).ToArray();
         }
+    }
+
+    public ScoreType IsHighScore()
+    {
+        LoadScores();
+        GetHighScores();
+
+        ScoreType retval = ScoreType.None;
+
+        int maxHatHighScore = 0;
+        int totalHatHighScore = 0;
+        int endHatHighScore = 0;
+
+        //determine the highest score that is in the best scores
+        foreach (ScoreStruct scoreStruct in totalHatArray)
+        {
+            if (scoreStruct != null)
+            {
+                maxHatHighScore = Mathf.Max(scoreStruct.maxHats, maxHatHighScore);
+            }
+        }
+
+
+        foreach (ScoreStruct scoreStruct in maxHatArray)
+        {
+            if (scoreStruct != null)
+            {
+                totalHatHighScore = Mathf.Max(scoreStruct.totalHats, totalHatHighScore);
+            }
+        }
+
+
+        foreach (ScoreStruct scoreStruct in endHatArray)
+        {
+            if (scoreStruct != null)
+            {
+                endHatHighScore = Mathf.Max(scoreStruct.endingHats, endHatHighScore);
+            }
+        }
+
+        //see if we are higher than that score
+
+        if (scoreScriptable.score.maxHats > maxHatHighScore)
+        {
+            retval |= ScoreType.MaxHats;
+        }
+
+        if (scoreScriptable.score.totalHats > totalHatHighScore)
+        {
+            retval |= ScoreType.TotalHats;
+        }
+
+        if (scoreScriptable.score.endingHats > endHatHighScore)
+        {
+            retval |= ScoreType.EndHats;
+        }
+
+        return retval;
+    }
+
+    public ScoreType IsRecordableScore()
+    {
+        LoadScores();
+        GetHighScores();
+
+        ScoreType retval = ScoreType.None;
+
+        int maxHatMinScore = int.MaxValue;
+        int totalHatMinScore = int.MaxValue;
+        int endHatMinScore = int.MaxValue;
+
+        //determine the lowest score that is in the best scores
+        foreach (ScoreStruct scoreStruct in totalHatArray)
+        {
+            if (scoreStruct != null)
+            {
+                maxHatMinScore = Mathf.Min(scoreStruct.maxHats, maxHatMinScore);
+            }
+        }
+
+
+        foreach (ScoreStruct scoreStruct in maxHatArray)
+        {
+            if (scoreStruct != null)
+            {
+                totalHatMinScore = Mathf.Min(scoreStruct.totalHats, totalHatMinScore);
+            }
+        }
+
+
+        foreach (ScoreStruct scoreStruct in endHatArray)
+        {
+            if (scoreStruct != null)
+            {
+                endHatMinScore = Mathf.Min(scoreStruct.endingHats, endHatMinScore);
+            }
+        }
+
+
+        if (scoreScriptable.score.maxHats > maxHatMinScore || maxHatMinScore == int.MaxValue)
+        {
+            retval |= ScoreType.MaxHats;
+        }
+
+        if (scoreScriptable.score.totalHats > totalHatMinScore || totalHatMinScore == int.MaxValue)
+        {
+            retval |= ScoreType.TotalHats;
+        }
+
+        if (scoreScriptable.score.endingHats > endHatMinScore || endHatMinScore == int.MaxValue)
+        {
+            retval |= ScoreType.EndHats;
+        }
+
+        return retval;
     }
 }
