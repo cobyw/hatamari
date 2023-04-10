@@ -6,12 +6,24 @@ public class Urchin : MonoBehaviour
 {
     public List<Hat> urchinHats = new List<Hat>();
     [SerializeField] private GameObject offsetPoint;
+    [SerializeField] private ScoreStructScriptable scoreStructScriptable;
+    [SerializeField] private HighScoreManager highScoreManager;
 
     private Vector3 offsetDistance;
 
     private void Start()
     {
         offsetDistance = offsetPoint.transform.position - transform.position;
+
+        if (highScoreManager == null)
+        {
+            highScoreManager = FindObjectOfType<HighScoreManager>();
+        }
+        //clears the current score
+        scoreStructScriptable.Clear();
+
+        //stores the new time associated with the save
+        scoreStructScriptable.score.time = System.DateTime.Now;
     }
 
     private void Update()
@@ -29,6 +41,8 @@ public class Urchin : MonoBehaviour
 
     public void Attach(Hat hatToAttach)
     {
+        int initialCount = urchinHats.Count;
+
         if (!hatToAttach.isAttached)
         {
             if (urchinHats.Count == 0)
@@ -47,5 +61,20 @@ public class Urchin : MonoBehaviour
 
             hatToAttach.isAttached = true;
         }
+
+        //if we actually gained any hats add the hat
+        if (urchinHats.Count != initialCount)
+        {
+            scoreStructScriptable.score.totalHats++;
+        }
+
+        //if we have more hats than our previous max this is now our max.
+        scoreStructScriptable.score.maxHats = Mathf.Max(urchinHats.Count, scoreStructScriptable.score.maxHats);
+    }
+
+    public void UpdateEndScore()
+    {
+        scoreStructScriptable.score.endingHats = urchinHats.Count;
+        highScoreManager.Save();
     }
 }

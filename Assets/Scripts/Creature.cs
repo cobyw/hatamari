@@ -123,6 +123,9 @@ public class Creature : MonoBehaviour
 
     private void Win()
     {
+        //update the end score
+        urchin.UpdateEndScore();
+
         //slows down time to indicate winning
         Time.timeScale = winTimeScale;
 
