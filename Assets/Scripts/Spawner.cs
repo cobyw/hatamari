@@ -86,7 +86,11 @@ public class Spawner : MonoBehaviour
 
     public void StartSpawning()
     {
-        StartCoroutine(SpawnRando());
+        if (!spawning)
+        {
+            spawning = true;
+            StartCoroutine(SpawnRando());
+        }
     }
 
     public void StopSpawningImmediate()
@@ -122,10 +126,9 @@ public class Spawner : MonoBehaviour
     /// Causes a prefab to spawn at a randomized cadence
     /// </summary>
     /// <returns></returns>
-    IEnumerator SpawnRando()
+    private IEnumerator SpawnRando()
     {
-        if (!spawning)
-        {
+
             spawning = true;
             //determine if we need to flip the rando
             var shouldFlip = spawnVector.x > 0;
@@ -167,7 +170,7 @@ public class Spawner : MonoBehaviour
                 }
 
             }
-        }
+        
     }
 IEnumerator DespawnOverTime()
     {

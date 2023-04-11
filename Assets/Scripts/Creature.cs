@@ -66,8 +66,11 @@ public class Creature : MonoBehaviour
             }
             else
             {
-                //winners only need one hat
-                collision.gameObject.SetActive(false);
+                //distable hats that spawn in the win crab
+                if (!collision.GetComponent<Hat>().isAttached)
+                {
+                    collision.gameObject.SetActive(false);
+                }
             }
         }
     }

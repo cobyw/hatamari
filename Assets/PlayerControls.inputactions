@@ -24,7 +24,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Select",
+                    "name": "Pause",
                     "type": "Value",
                     "id": "adcf3b1b-afc9-4887-a256-d1b44a0f1edc",
                     "expectedControlType": "Button",
@@ -87,6 +87,17 @@
                 },
                 {
                     "name": "",
+                    "id": "b8faf9eb-5a16-45fe-80fd-ad29b9d2e283",
+                    "path": "<Joystick>/stick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "6d992ae6-9481-42c4-88fd-ad16b488cb58",
                     "path": "<Keyboard>/d",
                     "interactions": "",
@@ -120,23 +131,34 @@
                 },
                 {
                     "name": "",
-                    "id": "68059143-4fca-4a44-917a-e990564b677c",
-                    "path": "<Keyboard>/space",
+                    "id": "d6e22dae-54b8-4b43-b270-98a065254758",
+                    "path": "<Joystick>/stick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Select",
+                    "action": "RightMovement",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "c1e39328-67bd-454d-a666-2036d2643060",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Select",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "540efdbc-7c8b-41e8-91ca-52310c7d9217",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -186,6 +208,17 @@
                 },
                 {
                     "name": "",
+                    "id": "a58ae4a0-901d-4083-857f-289b51916cbc",
+                    "path": "<Joystick>/stick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JumpMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "0d0da454-e5de-46ad-baf0-cb65029f4a75",
                     "path": "<Keyboard>/s",
                     "interactions": "",
@@ -210,6 +243,17 @@
                     "name": "",
                     "id": "8c1f58dc-5691-44ee-824c-85de41fc2632",
                     "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SquishMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "afac1401-b91c-4c87-b2fb-3b47d55a5fe1",
+                    "path": "<Joystick>/stick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

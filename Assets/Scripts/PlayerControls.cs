@@ -46,7 +46,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Select"",
+                    ""name"": ""Pause"",
                     ""type"": ""Value"",
                     ""id"": ""adcf3b1b-afc9-4887-a256-d1b44a0f1edc"",
                     ""expectedControlType"": ""Button"",
@@ -109,6 +109,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""b8faf9eb-5a16-45fe-80fd-ad29b9d2e283"",
+                    ""path"": ""<Joystick>/stick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""6d992ae6-9481-42c4-88fd-ad16b488cb58"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
@@ -142,23 +153,34 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""68059143-4fca-4a44-917a-e990564b677c"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""d6e22dae-54b8-4b43-b270-98a065254758"",
+                    ""path"": ""<Joystick>/stick/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Select"",
+                    ""action"": ""RightMovement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""c1e39328-67bd-454d-a666-2036d2643060"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Select"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""540efdbc-7c8b-41e8-91ca-52310c7d9217"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -208,6 +230,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""a58ae4a0-901d-4083-857f-289b51916cbc"",
+                    ""path"": ""<Joystick>/stick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JumpMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""0d0da454-e5de-46ad-baf0-cb65029f4a75"",
                     ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
@@ -232,6 +265,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""8c1f58dc-5691-44ee-824c-85de41fc2632"",
                     ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SquishMovement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""afac1401-b91c-4c87-b2fb-3b47d55a5fe1"",
+                    ""path"": ""<Joystick>/stick/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -298,7 +342,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_LeftMovement = m_Gameplay.FindAction("LeftMovement", throwIfNotFound: true);
         m_Gameplay_RightMovement = m_Gameplay.FindAction("RightMovement", throwIfNotFound: true);
-        m_Gameplay_Select = m_Gameplay.FindAction("Select", throwIfNotFound: true);
+        m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
         m_Gameplay_JumpMovement = m_Gameplay.FindAction("JumpMovement", throwIfNotFound: true);
         m_Gameplay_SquishMovement = m_Gameplay.FindAction("SquishMovement", throwIfNotFound: true);
         // Menu
@@ -367,7 +411,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_LeftMovement;
     private readonly InputAction m_Gameplay_RightMovement;
-    private readonly InputAction m_Gameplay_Select;
+    private readonly InputAction m_Gameplay_Pause;
     private readonly InputAction m_Gameplay_JumpMovement;
     private readonly InputAction m_Gameplay_SquishMovement;
     public struct GameplayActions
@@ -376,7 +420,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public GameplayActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @LeftMovement => m_Wrapper.m_Gameplay_LeftMovement;
         public InputAction @RightMovement => m_Wrapper.m_Gameplay_RightMovement;
-        public InputAction @Select => m_Wrapper.m_Gameplay_Select;
+        public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
         public InputAction @JumpMovement => m_Wrapper.m_Gameplay_JumpMovement;
         public InputAction @SquishMovement => m_Wrapper.m_Gameplay_SquishMovement;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
@@ -394,9 +438,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @RightMovement.started += instance.OnRightMovement;
             @RightMovement.performed += instance.OnRightMovement;
             @RightMovement.canceled += instance.OnRightMovement;
-            @Select.started += instance.OnSelect;
-            @Select.performed += instance.OnSelect;
-            @Select.canceled += instance.OnSelect;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
             @JumpMovement.started += instance.OnJumpMovement;
             @JumpMovement.performed += instance.OnJumpMovement;
             @JumpMovement.canceled += instance.OnJumpMovement;
@@ -413,9 +457,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @RightMovement.started -= instance.OnRightMovement;
             @RightMovement.performed -= instance.OnRightMovement;
             @RightMovement.canceled -= instance.OnRightMovement;
-            @Select.started -= instance.OnSelect;
-            @Select.performed -= instance.OnSelect;
-            @Select.canceled -= instance.OnSelect;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
             @JumpMovement.started -= instance.OnJumpMovement;
             @JumpMovement.performed -= instance.OnJumpMovement;
             @JumpMovement.canceled -= instance.OnJumpMovement;
@@ -489,7 +533,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     {
         void OnLeftMovement(InputAction.CallbackContext context);
         void OnRightMovement(InputAction.CallbackContext context);
-        void OnSelect(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
         void OnJumpMovement(InputAction.CallbackContext context);
         void OnSquishMovement(InputAction.CallbackContext context);
     }
