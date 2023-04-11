@@ -2833,8 +2833,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: paused...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 840eb865ca0d62c4fb1dd174a29ef40d, type: 2}
+  m_sharedMaterial: {fileID: -591776807686155564, guid: 840eb865ca0d62c4fb1dd174a29ef40d, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
