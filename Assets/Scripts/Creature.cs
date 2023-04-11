@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Creature : MonoBehaviour
 {
@@ -26,7 +25,6 @@ public class Creature : MonoBehaviour
 
     private void Start()
     {
-        Cursor.visible = false;
         urchin = FindObjectOfType<Urchin>();
 
         movementVector = new Vector3(speed, 0, 0);
@@ -164,7 +162,7 @@ public class Creature : MonoBehaviour
         yield return new WaitForSeconds(timeToLoadWinScreen);
         Time.timeScale = 1;
         Cursor.visible = true;
-        SceneManager.LoadScene(winScreenName);
+        FindObjectOfType<SceneLoader>().ForceChangeScene(winScreenName);
     }
 
     private void Lose()
@@ -192,7 +190,7 @@ public class Creature : MonoBehaviour
 
         Time.timeScale = 1;
         Cursor.visible = true;
-        SceneManager.LoadScene(loseScreenName);
+        FindObjectOfType<SceneLoader>().ForceChangeScene(loseScreenName);
     }
 
 }

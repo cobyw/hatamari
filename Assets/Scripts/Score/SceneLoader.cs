@@ -41,6 +41,11 @@ public class SceneLoader : MonoBehaviour
         }
     }
 
+    public void ForceChangeScene(string sceneToLoad)
+    {
+        StartCoroutine(TransitionOut(sceneToLoad));
+    }
+
     IEnumerator TransitionIn()
     {
         Color color = image.color;

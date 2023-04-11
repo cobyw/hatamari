@@ -34,6 +34,7 @@ public class Urchin : MonoBehaviour
 
         //stores the new time associated with the save
         scoreStructScriptable.score.time = System.DateTime.Now;
+        Cursor.visible = false;
     }
 
     private void Update()
