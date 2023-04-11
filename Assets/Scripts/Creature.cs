@@ -60,9 +60,17 @@ public class Creature : MonoBehaviour
                 Attack(collision.gameObject);
             }
         }
-        else if (!winCreature && collision.GetComponent<Hat>() != null)
+        else if (collision.GetComponent<Hat>() != null)
         {
-            Attach(collision.GetComponent<Hat>());
+            if (!winCreature)
+            {
+                Attach(collision.GetComponent<Hat>());
+            }
+            else
+            {
+                //winners only need one hat
+                collision.gameObject.SetActive(false);
+            }
         }
     }
 
