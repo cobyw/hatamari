@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class BackgroundMusic : MonoBehaviour
 {
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource ambientSource;
     public float baseVolume = 1.0f;
     public float pauseVolumePercent = 0.15f;
 
@@ -25,7 +26,6 @@ public class BackgroundMusic : MonoBehaviour
         else
         {
             Instance = this;
-            audioSource = GetComponent<AudioSource>();
             DontDestroyOnLoad(this.gameObject);
         }
     }
@@ -38,13 +38,13 @@ public class BackgroundMusic : MonoBehaviour
         }
         else
         {
-            audioSource.volume = volume;
+            musicSource.volume = volume;
         }
     }
 
     public void PauseVolume(bool pausing)
     {
         //if we are pausing then use the base volume * the pause volume, otherwise we are unpausing and should use the base volume
-        audioSource.volume = pausing ? baseVolume * pauseVolumePercent : baseVolume;
+        musicSource.volume = pausing ? baseVolume * pauseVolumePercent : baseVolume;
     }
 }
