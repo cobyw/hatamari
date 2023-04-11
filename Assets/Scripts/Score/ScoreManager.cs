@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using NaughtyAttributes;
 
 public class ScoreManager : MonoBehaviour
 {
+    [SerializeField] private bool saveOnAwake = false;
     [SerializeField] private ScoreStructScriptable scoreScriptable;
     [SerializeField] int scoresToShow = 5;
     [SerializeField] private List<ScoreStruct> dummyScoreList;
@@ -16,33 +18,78 @@ public class ScoreManager : MonoBehaviour
     private ScoreStruct[] endHatArray = new ScoreStruct[5];
     private ScoreStruct[] maxHatArray = new ScoreStruct[5];
 
-    private string yourScoreString;
-    private string highScoreString;
+    private bool init;
 
-    public void Save(bool clearScoreObject = false)
+    public ScoreStruct[] TotalHatArray
+    {
+        get
+        {
+            Init();
+            return totalHatArray;
+        }
+    }
+
+    public ScoreStruct[] EndHatArray
+    {
+        get
+        {
+            Init();
+            return endHatArray;
+        }
+    }
+
+    public ScoreStruct[] MaxHatArray
+    {
+        get
+        {
+            Init();
+            return maxHatArray;
+        }
+    }
+
+    private void Awake()
+    {
+        if (saveOnAwake)
+        {
+            SaveScores();
+        }
+
+        Init();
+    }
+
+    public void Init(bool force = false)
+    {
+        if (!init || force)
+        {
+            LoadScores();
+            SetUpHighScores();
+            init = true;
+        }
+    }
+
+    public void SaveScores(bool clearScoreObject = false)
     {
         //make sure we have something before we save
         if (!scoreScriptable.isEmpty())
         {
-            LoadScores();
+            Init();
 
             //make sure we have a name set (no saving empties)
             if (!string.IsNullOrEmpty(scoreScriptable.score.initials))
             {
                 //make sure this score isn't already saved
-                if (!scoreList.Contains(scoreScriptable.score))
+                if (!scoreScriptable.isSaved)
                 {
                     scoreList.Add(scoreScriptable.score);
-
                     scoreArray = scoreList.ToArray();
 
-                    var jsonToSaveConverted = JsonUtility.ToJson(scoreArray);
-
-
+                    var jsonToSaveConverted = JsonHelper.ToJson(scoreArray);
 
                     PlayerPrefs.SetString("SaveData", jsonToSaveConverted);
+                    PlayerPrefs.Save();
 
                     Debug.Log("Saved in PlayerPrefs:" + jsonToSaveConverted);
+                    scoreScriptable.isSaved = true;
                 }
                 else
                 {
@@ -59,6 +106,8 @@ public class ScoreManager : MonoBehaviour
             {
                 scoreScriptable.Clear();
             }
+
+            Init(force:true);
         }
         else
         {
@@ -80,16 +129,16 @@ public class ScoreManager : MonoBehaviour
             }
             else
             {
-                scoreList = new List<ScoreStruct>();
+                scoreList = dummyScoreList;
             }
         }
         else
         {
-            scoreList = new List<ScoreStruct>();
+            scoreList = dummyScoreList;
         }
     }
 
-    private void GetHighScores()
+    private void SetUpHighScores()
     {
         if (scoreList.Count != 0)
         {
@@ -104,7 +153,7 @@ public class ScoreManager : MonoBehaviour
             maxHatArray = scoreList.GetRange(0, scoresToShow).ToArray();
 
             //get the end hats
-            scoreList.Sort((s1, s2) => s1.endingHats.CompareTo(s2.endingHats));
+            scoreList.Sort((s1, s2) => s1.endHats.CompareTo(s2.endHats));
             scoreList.Reverse();
             endHatArray = scoreList.GetRange(0, scoresToShow).ToArray();
         }
@@ -112,57 +161,32 @@ public class ScoreManager : MonoBehaviour
 
     public ScoreType IsHighScore()
     {
-        LoadScores();
-        GetHighScores();
+        Init();
 
         ScoreType retval = ScoreType.None;
 
-        int maxHatHighScore = 0;
-        int totalHatHighScore = 0;
-        int endHatHighScore = 0;
-
-        //determine the highest score that is in the best scores
-        foreach (ScoreStruct scoreStruct in totalHatArray)
+        if (totalHatArray[0] != null)
         {
-            if (scoreStruct != null)
+            if (scoreScriptable.score.totalHats >= totalHatArray[0].totalHats || totalHatArray[0].Equals(scoreScriptable.score))
             {
-                maxHatHighScore = Mathf.Max(scoreStruct.maxHats, maxHatHighScore);
+                retval |= ScoreType.TotalHats;
             }
         }
 
-
-        foreach (ScoreStruct scoreStruct in maxHatArray)
+        if (maxHatArray[0] != null)
         {
-            if (scoreStruct != null)
+            if (scoreScriptable.score.maxHats >= maxHatArray[0].maxHats || maxHatArray[0].Equals(scoreScriptable.score))
             {
-                totalHatHighScore = Mathf.Max(scoreStruct.totalHats, totalHatHighScore);
+                retval |= ScoreType.MaxHats;
             }
         }
 
-
-        foreach (ScoreStruct scoreStruct in endHatArray)
+        if (endHatArray[0] != null)
         {
-            if (scoreStruct != null)
+            if (scoreScriptable.score.endHats >= endHatArray[0].endHats || endHatArray[0].Equals(scoreScriptable.score))
             {
-                endHatHighScore = Mathf.Max(scoreStruct.endingHats, endHatHighScore);
+                retval |= ScoreType.EndHats;
             }
-        }
-
-        //see if we are higher than that score
-
-        if (scoreScriptable.score.maxHats > maxHatHighScore)
-        {
-            retval |= ScoreType.MaxHats;
-        }
-
-        if (scoreScriptable.score.totalHats > totalHatHighScore)
-        {
-            retval |= ScoreType.TotalHats;
-        }
-
-        if (scoreScriptable.score.endingHats > endHatHighScore)
-        {
-            retval |= ScoreType.EndHats;
         }
 
         return retval;
@@ -170,58 +194,76 @@ public class ScoreManager : MonoBehaviour
 
     public ScoreType IsRecordableScore()
     {
-        LoadScores();
-        GetHighScores();
+        Init();
 
         ScoreType retval = ScoreType.None;
 
-        int maxHatMinScore = int.MaxValue;
-        int totalHatMinScore = int.MaxValue;
-        int endHatMinScore = int.MaxValue;
-
-        //determine the lowest score that is in the best scores
         foreach (ScoreStruct scoreStruct in totalHatArray)
         {
             if (scoreStruct != null)
             {
-                maxHatMinScore = Mathf.Min(scoreStruct.maxHats, maxHatMinScore);
+                if (scoreStruct.Equals(scoreScriptable.score) || scoreScriptable.score.totalHats >= scoreStruct.totalHats)
+                {
+                    retval |= ScoreType.TotalHats;
+                }
             }
         }
-
 
         foreach (ScoreStruct scoreStruct in maxHatArray)
         {
             if (scoreStruct != null)
             {
-                totalHatMinScore = Mathf.Min(scoreStruct.totalHats, totalHatMinScore);
+                if (scoreStruct.Equals(scoreScriptable.score) || scoreScriptable.score.maxHats >= scoreStruct.maxHats)
+                {
+                    retval |= ScoreType.MaxHats;
+                }
             }
         }
-
 
         foreach (ScoreStruct scoreStruct in endHatArray)
         {
             if (scoreStruct != null)
             {
-                endHatMinScore = Mathf.Min(scoreStruct.endingHats, endHatMinScore);
+                if (scoreStruct.Equals(scoreScriptable.score) || scoreScriptable.score.endHats >= scoreStruct.endHats)
+                {
+                    retval |= ScoreType.EndHats;
+                }
             }
         }
 
-
-        if (scoreScriptable.score.maxHats > maxHatMinScore || maxHatMinScore == int.MaxValue)
-        {
-            retval |= ScoreType.MaxHats;
-        }
-
-        if (scoreScriptable.score.totalHats > totalHatMinScore || totalHatMinScore == int.MaxValue)
-        {
-            retval |= ScoreType.TotalHats;
-        }
-
-        if (scoreScriptable.score.endingHats > endHatMinScore || endHatMinScore == int.MaxValue)
-        {
-            retval |= ScoreType.EndHats;
-        }
-
         return retval;
+    }
+
+    [Button]
+    public void ClearCurrntScore()
+    {
+        scoreScriptable.Clear();
+    }
+
+    [Button]
+    public void ClearSaveData()
+    {
+        PlayerPrefs.DeleteAll();
+        scoreScriptable.isSaved = false;
+    }
+
+
+    [Button]
+    public void StoreDummyData()
+    {
+        ScoreStruct[] array = dummyScoreList.ToArray();
+
+        var jsonToSaveConverted = JsonHelper.ToJson(array);
+
+        PlayerPrefs.SetString("SaveData", jsonToSaveConverted);
+        PlayerPrefs.Save();
+
+        Debug.Log("Saved in PlayerPrefs:" + jsonToSaveConverted);
+    }
+
+    [Button]
+    public void PrintPlayerPrefs()
+    {
+        Debug.Log("PlayerPrefs:" + PlayerPrefs.GetString("SaveData"));
     }
 }

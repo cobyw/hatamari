@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class Urchin : MonoBehaviour
 {
-    public List<Hat> urchinHats = new List<Hat>();
+    private List<Hat> urchinHats = new List<Hat>();
     [SerializeField] private GameObject offsetPoint;
     [SerializeField] private ScoreStructScriptable scoreStructScriptable;
     [SerializeField] private ScoreManager highScoreManager;
 
     private Vector3 offsetDistance;
+
+    public List<Hat> UrchinHats
+    {
+        get => urchinHats;
+        set
+        {
+            urchinHats = value;
+            scoreStructScriptable.currentHats = urchinHats.Count;
+        }
+    }
 
     private void Start()
     {
@@ -37,6 +47,12 @@ public class Urchin : MonoBehaviour
         {
             Attach(collision.GetComponent<Hat>());
         }
+    }
+
+    public void ClearHats()
+    {
+        urchinHats.Clear();
+        scoreStructScriptable.currentHats = 0;
     }
 
     public void Attach(Hat hatToAttach)
@@ -70,10 +86,13 @@ public class Urchin : MonoBehaviour
 
         //if we have more hats than our previous max this is now our max.
         scoreStructScriptable.score.maxHats = Mathf.Max(urchinHats.Count, scoreStructScriptable.score.maxHats);
+
+        //our current hats is this
+        scoreStructScriptable.currentHats = urchinHats.Count;
     }
 
     public void UpdateEndScore()
     {
-        scoreStructScriptable.score.endingHats = urchinHats.Count;
+        scoreStructScriptable.score.endHats = urchinHats.Count;
     }
 }

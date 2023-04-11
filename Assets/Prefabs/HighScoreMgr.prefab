@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8550205925346507050}
   - component: {fileID: 1163050156292281027}
+  - component: {fileID: 7798604602782131721}
   m_Layer: 0
   m_Name: HighScoreMgr
   m_TagString: Untagged
@@ -46,4 +47,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreScriptable: {fileID: 11400000, guid: 9e5e94976eb68624aa7ba38b5c9b347c, type: 2}
   scoresToShow: 5
-  dummyScoreList: []
+  dummyScoreList:
+  - totalHats: 15
+    endHats: 2
+    maxHats: 5
+    initials: JJS
+  - totalHats: 10
+    endHats: 1
+    maxHats: 6
+    initials: GQB
+  - totalHats: 14
+    endHats: 3
+    maxHats: 4
+    initials: ROC
+  - totalHats: 9
+    endHats: 1
+    maxHats: 4
+    initials: CRW
+  - totalHats: 9
+    endHats: 2
+    maxHats: 4
+    initials: LLC
+--- !u!114 &7798604602782131721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023106953363021381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 866edd1211be7a64485f118d0bc555c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  validMessage: Press Enter to Submit
+  highScoreMessage: HIGH SCORE! Enter your initials!
+  newScoreMessage: GREAT SCORE! Enter your initials!
+  invalidMessage: Initials must be less than 3 characters!
+  scoreScriptable: {fileID: 11400000, guid: 9e5e94976eb68624aa7ba38b5c9b347c, type: 2}
+  inputField: {fileID: 0}
+  informationalMessage: {fileID: 0}
+  highScoreManager: {fileID: 1163050156292281027}

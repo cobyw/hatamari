@@ -68,14 +68,14 @@ public class Creature : MonoBehaviour
 
     private void Attack(GameObject objectHit)
     {
-        if (urchin.urchinHats.Count == 0)
+        if (urchin.UrchinHats.Count == 0)
         {
             Lose();
         }
         else
         {
-            Attach(urchin.urchinHats[0]);
-            urchin.urchinHats.Clear();
+            Attach(urchin.UrchinHats[0]);
+            urchin.UrchinHats.Clear();
         }
     }
 
@@ -84,17 +84,17 @@ public class Creature : MonoBehaviour
     {
         if (hatToAttach.isAttached)
         {
-            if (urchin.urchinHats.Contains(hatToAttach))
+            if (urchin.UrchinHats.Contains(hatToAttach))
             {
-                var indexOfHat = urchin.urchinHats.FindIndex(x => x.Equals(hatToAttach));
+                var indexOfHat = urchin.UrchinHats.FindIndex(x => x.Equals(hatToAttach));
 
                 if (indexOfHat == 0)
                 {
-                    urchin.urchinHats.Clear();
+                    urchin.UrchinHats.Clear();
                 }
                 else
                 {
-                    urchin.urchinHats = urchin.urchinHats.GetRange(0, indexOfHat);
+                    urchin.UrchinHats = urchin.UrchinHats.GetRange(0, indexOfHat);
                 }
             }
             //if we are attached but not to the urchin return early. Creatures do not steal hats from one another.
