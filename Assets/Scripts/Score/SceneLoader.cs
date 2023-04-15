@@ -20,6 +20,7 @@ public class SceneLoader : MonoBehaviour
             Debug.LogError("No Transition image set in introMgr");
         }
 
+        canChangeScenes = canChangeScenesOnStart;
         StartCoroutine(TransitionIn());
     }
 
@@ -56,8 +57,6 @@ public class SceneLoader : MonoBehaviour
 
             yield return null;
         }
-
-        canChangeScenes = canChangeScenesOnStart;
     }
 
     IEnumerator TransitionOut(string sceneName)

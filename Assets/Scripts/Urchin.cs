@@ -33,7 +33,7 @@ public class Urchin : MonoBehaviour
         scoreStructScriptable.Clear();
 
         //stores the new time associated with the save
-        scoreStructScriptable.score.time = System.DateTime.Now;
+        scoreStructScriptable.score.time = (int)System.DateTime.Now.Ticks;
         Cursor.visible = false;
     }
 

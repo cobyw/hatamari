@@ -16,6 +16,7 @@ public class ScoreInitialSaver : MonoBehaviour
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private TextMeshProUGUI informationalMessage;
     [SerializeField] private ScoreManager highScoreManager;
+    [SerializeField] private SceneLoader sceneLoader;
 
     private ScoreType recordableScore = ScoreType.None;
     private ScoreType highScore = ScoreType.None;
@@ -31,6 +32,12 @@ public class ScoreInitialSaver : MonoBehaviour
         {
             inputField = FindObjectOfType<TMP_InputField>();
         }
+
+        if (sceneLoader == null)
+        {
+            sceneLoader = FindObjectOfType<SceneLoader>();
+        }
+
 
         recordableScore = highScoreManager.IsRecordableScore();
         highScore = highScoreManager.IsHighScore();
@@ -52,6 +59,7 @@ public class ScoreInitialSaver : MonoBehaviour
         {
             inputField.gameObject.SetActive(false);
             informationalMessage.text = "";
+            sceneLoader.EnableSceneChange();
         }
     }
 
@@ -83,7 +91,7 @@ public class ScoreInitialSaver : MonoBehaviour
 
         if (!invalidInitials)
         {
-            FindAnyObjectByType<SceneLoader>().EnableSceneChange();
+            sceneLoader.EnableSceneChange();
         }
     }
 }

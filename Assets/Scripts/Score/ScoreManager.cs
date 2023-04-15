@@ -234,6 +234,22 @@ public class ScoreManager : MonoBehaviour
         return retval;
     }
 
+    public string GetMostReventInitials()
+    {
+        Init();
+
+        var retval = "";
+        var mostRecentScore = scoreList.OrderByDescending(x => x.time).FirstOrDefault();
+
+        if (mostRecentScore.time != (int)System.DateTime.MinValue.Ticks)
+        {
+            retval = mostRecentScore.initials;
+        }
+
+        Debug.Log(retval);
+        return retval;
+    }
+
     [Button]
     public void ClearCurrntScore()
     {

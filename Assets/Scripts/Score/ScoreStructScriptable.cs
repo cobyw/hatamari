@@ -8,7 +8,7 @@ public class ScoreStruct
     public int endHats;
     public int maxHats;
     public string initials;
-    public System.DateTime time;
+    public int time;
 
     public bool Equals(ScoreStruct other)
     {
