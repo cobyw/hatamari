@@ -49,6 +49,7 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator TransitionIn()
     {
+        image.gameObject.SetActive(true);
         Color color = image.color;
         for (float alpha = 1f; alpha >= 0; alpha -= Time.deltaTime)
         {
@@ -61,6 +62,7 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator TransitionOut(string sceneName)
     {
+        image.gameObject.SetActive(true);
         Color color = image.color;
         for (float alpha = 0f; alpha <= 1; alpha += Time.deltaTime)
         {
