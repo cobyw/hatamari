@@ -201,6 +201,10 @@ PrefabInstance:
       propertyPath: m_DynamicOccludee
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1522127763051256274, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.6
+      objectReference: {fileID: 0}
     - target: {fileID: 1522127763230314098, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
       propertyPath: m_DynamicOccludee
       value: 1
@@ -252,6 +256,10 @@ PrefabInstance:
     - target: {fileID: 1522127763546227883, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7992702138308118932, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
@@ -470,7 +478,7 @@ MonoBehaviour:
   canChangeScenesOnStart: 1
   canChangeScenes: 0
   image: {fileID: 651490199}
-  nextScene: GameScene
+  nextScene: introScreen
 --- !u!4 &601811149
 Transform:
   m_ObjectHideFlags: 0

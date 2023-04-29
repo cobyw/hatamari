@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: High Score Object
   m_EditorClassIdentifier: Assembly-CSharp::HighScoreStructScriptable
   score:
-    totalHats: 28
-    endHats: 5
-    maxHats: 14
-    initials: FDS
-  isSaved: 1
-  currentHats: 4
+    totalHats: 69
+    endHats: 10
+    maxHats: 10
+    initials: ASS
+    time: 12
+  isSaved: 0
+  currentHats: 12
