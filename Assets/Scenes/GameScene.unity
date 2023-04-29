@@ -4133,38 +4133,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5307094845164222658, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
-      propertyPath: m_LocalAABB.m_Center.x
-      value: -52.123817
-      objectReference: {fileID: 0}
-    - target: {fileID: 5307094845164222658, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
-      propertyPath: m_LocalAABB.m_Center.y
-      value: -8.683332
-      objectReference: {fileID: 0}
-    - target: {fileID: 5307094845164222658, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
-      propertyPath: m_LocalAABB.m_Extent.x
-      value: 10.081266
-      objectReference: {fileID: 0}
-    - target: {fileID: 5307094845164222658, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
-      propertyPath: m_LocalAABB.m_Extent.y
-      value: 3.888637
-      objectReference: {fileID: 0}
-    - target: {fileID: 7072730696570935484, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
-      propertyPath: m_LocalAABB.m_Center.x
-      value: -5.3570375
-      objectReference: {fileID: 0}
-    - target: {fileID: 7072730696570935484, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
-      propertyPath: m_LocalAABB.m_Center.y
-      value: -2.0922089
-      objectReference: {fileID: 0}
-    - target: {fileID: 7072730696570935484, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
-      propertyPath: m_LocalAABB.m_Extent.x
-      value: 9.805526
-      objectReference: {fileID: 0}
-    - target: {fileID: 7072730696570935484, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
-      propertyPath: m_LocalAABB.m_Extent.y
-      value: 4.6642513
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e948a66c1c86d3446b3d03e126e5501e, type: 3}
 --- !u!1001 &2005431490608317982
