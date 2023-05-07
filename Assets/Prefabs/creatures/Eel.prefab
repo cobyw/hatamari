@@ -132,6 +132,7 @@ MonoBehaviour:
   winScreenName: winScreen
   loseTimeScale: 0.5
   loseScreenName: loseScreen
+  timeBetweenAttacks: 0.5
 --- !u!114 &6012939233898994199
 MonoBehaviour:
   m_ObjectHideFlags: 0

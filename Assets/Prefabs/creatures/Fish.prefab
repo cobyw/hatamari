@@ -173,6 +173,7 @@ MonoBehaviour:
   winScreenName: winScreen
   loseTimeScale: 0.5
   loseScreenName: loseScreen
+  timeBetweenAttacks: 0.5
 --- !u!58 &4218938640153944437
 CircleCollider2D:
   m_ObjectHideFlags: 0

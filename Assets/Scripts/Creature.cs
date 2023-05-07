@@ -19,9 +19,13 @@ public class Creature : MonoBehaviour
     [SerializeField] private float loseTimeScale = 0.5f;
     [SerializeField] private string loseScreenName = "loseScreen";
 
+    [SerializeField] private float timeBetweenAttacks = 0.5f;
+
     private Vector3 movementVector;
 
     private Urchin urchin;
+
+    private bool canAttack = true;
 
     private void Start()
     {
@@ -63,6 +67,7 @@ public class Creature : MonoBehaviour
             if (!winCreature)
             {
                 Attach(collision.GetComponent<Hat>());
+                StartCoroutine(CanAttackTimer());
             }
             else
             {
@@ -77,15 +82,26 @@ public class Creature : MonoBehaviour
 
     private void Attack(GameObject objectHit)
     {
-        if (urchin.UrchinHats.Count == 0)
+        if (canAttack)
         {
-            Lose();
+            if (urchin.UrchinHats.Count == 0)
+            {
+                Lose();
+            }
+            else
+            {
+                Attach(urchin.UrchinHats[0]);
+                urchin.UrchinHats.Clear();
+            }
+            StartCoroutine(CanAttackTimer());
         }
-        else
-        {
-            Attach(urchin.UrchinHats[0]);
-            urchin.UrchinHats.Clear();
-        }
+    }
+
+    IEnumerator CanAttackTimer()
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(timeBetweenAttacks);
+        canAttack = true;
     }
 
 
