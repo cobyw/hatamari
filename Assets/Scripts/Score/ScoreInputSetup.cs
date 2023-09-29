@@ -22,7 +22,7 @@ public class ScoreInputSetup : MonoBehaviour
 
         if (scoreManager != null)
         {
-            inputField.text = scoreManager.GetMostReventInitials();
+            inputField.text = scoreManager.GetMostRecentInitials();
         }
 
         if (inputField != null)

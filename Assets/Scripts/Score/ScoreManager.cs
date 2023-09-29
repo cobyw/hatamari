@@ -234,7 +234,7 @@ public class ScoreManager : MonoBehaviour
         return retval;
     }
 
-    public string GetMostReventInitials()
+    public string GetMostRecentInitials()
     {
         Init();
 
